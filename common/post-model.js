@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import SimpleSchema from 'simpl-schema';
+import SimpleSchema from 'meteor/aldeed:simple-schema';
 /* eslint-enable import/no-unresolved */
 
 export default ({ Meteor, Mongo, LikeableModel, CommentableModel, LinkableModel, LinkParent, ServerTime }) => {
@@ -45,7 +45,6 @@ export default ({ Meteor, Mongo, LikeableModel, CommentableModel, LinkableModel,
         // The _id of the user who creates the post.
         posterId: {
             type: String,
-            regEx: SimpleSchema.RegEx.Id,
             autoValue() {
                 if (this.isInsert) {
                     return this.userId;
