@@ -95,7 +95,7 @@ LinkableModel.registerParentModel(Group);
 new Group({name:"Meteor Lovers"});
 
 //Get an instance of group by querying MongoDB
-var group = GroupsCollection.findOne();
+var group = GroupsCollection.findOneAsync();
 
 console.log(group.name); // -> "Meteor Lovers"
 

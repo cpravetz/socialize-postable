@@ -7,12 +7,12 @@ export default ({ Meteor, Mongo, LikeableModel, CommentableModel, LinkableModel,
 
     if (PostsCollection.configureRedisOplog) {
         PostsCollection.configureRedisOplog({
-            mutation(options, { selector, doc }) {
+            async mutation(options, { selector, doc }) {
                 const namespaces = [PostsCollection._name];
                 let linkedObjectId = (selector && selector.linkedObjectId) || (doc && doc.linkedObjectId);
 
                 if (!linkedObjectId && selector._id) {
-                    const comment = PostsCollection.findOne({ _id: selector._id }, { fields: { linkedObjectId: 1 } });
+                    const comment = await PostsCollection.findOneAsync({ _id: selector._id }, { fields: { linkedObjectId: 1 } });
                     linkedObjectId = comment && comment.linkedObjectId;
                 }
 
@@ -94,9 +94,9 @@ export default ({ Meteor, Mongo, LikeableModel, CommentableModel, LinkableModel,
         * The user who created the post
         * @returns {User} The user who sent the post
         */
-        poster() {
+        async poster() {
             const posterId = this.posterId;
-            return Meteor.users.findOne({ _id: posterId });
+            return await Meteor.users.findOneAsync({ _id: posterId });
         }
 
         /**
